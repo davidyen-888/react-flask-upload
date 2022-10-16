@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function App() {
   const [fileURL, setfileURL] = useState("");
 
-  const handleUploadImage = (ev) => {
+  const handleUploadFile = (ev) => {
     ev.preventDefault();
 
     const data = new FormData();
@@ -16,6 +16,9 @@ function App() {
       response.json().then((body) => {
         console.log(body);
         setfileURL(`http://localhost:5000/${body.filename}`);
+        alert(
+          `File ${body.filename} uploaded successfully to Downloads folder`
+        );
       });
     });
   };
@@ -23,23 +26,22 @@ function App() {
   let uploadInput = null;
 
   return (
-    <form onSubmit={handleUploadImage}>
-      <div>
-        <input
-          ref={(ref) => {
-            uploadInput = ref;
-          }}
-          type="file"
-          multiple
-        />
-      </div>
-      <br />
-      <div>
-        <button>Upload</button>
-      </div>
-      {/* If successfully uploaded, show the message */}
-      {fileURL && <h3>file uploaded successfully</h3>}
-    </form>
+    <>
+      <form onSubmit={handleUploadFile}>
+        <div>
+          <input
+            ref={(ref) => {
+              uploadInput = ref;
+            }}
+            type="file"
+          />
+        </div>
+        <br />
+        <div>
+          <button>Upload</button>
+        </div>
+      </form>
+    </>
   );
 }
 
