@@ -3,8 +3,11 @@ import os
 from flask import Flask, jsonify, request
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = os.path.abspath(os.path.dirname(__file__)) + '/static/graph_images/'
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+UPLOAD_FOLDER = os.path.abspath(os.path.dirname(__file__)) + '/Downloads/'
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 
+                            'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 
+                            'csv', 'zip', 'rar', '7z', 'xml', 'json', 'html', 
+                            'htm', 'css', 'js', 'py'])
 
 
 @app.route('/upload', methods=['POST'])
