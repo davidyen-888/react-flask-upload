@@ -15,12 +15,10 @@ def allowedFile(filename):
 
 @app.route('/upload', methods=['POST'])
 def fileUpload():
-    file = request.files['file']
-    filename = secure_filename(file.filename)
-    destination = UPLOAD_FOLDER + 'test-' + filename
-    file.save(destination)
-
-    return jsonify({
-        'filename': filename,
-        'destination': destination
-    })
+    file = request.files.getlist('file')
+    for f in file:
+        if f and allowedFile(f.filename):
+            filename = secure_filename(f.filename)
+            destination = UPLOAD_FOLDER + 'uploaded-' + filename
+            f.save(destination)
+    return jsonify({'message': 'Uploaded successfully'})
