@@ -21,4 +21,4 @@ def fileUpload():
             filename = secure_filename(f.filename)
             destination = UPLOAD_FOLDER + 'uploaded-' + filename
             f.save(destination)
-    return jsonify({'message': 'Uploaded successfully'})
+        return jsonify({'message': 'File(s) successfully uploaded'})
