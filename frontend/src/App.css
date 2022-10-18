@@ -1,3 +1,8 @@
+/* all bg */
+body {
+  background-color: #fcf5d287;
+}
+
 .container {
   display: flex;
   flex-direction: column;
@@ -6,17 +11,15 @@
   padding: 0 20px;
 }
 .form {
+  display: flex;
+  flex-direction: column;
   padding: 15px;
-  border: 1px solid #eee;
   border-radius: 5px;
 }
 .formInput {
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 10px;
+    padding: 10px;
 }
 .formButton {
-  width: 100%;
   padding: 10px;
   border: 1px solid #eee;
   border-radius: 5px;
@@ -25,4 +28,11 @@
 }
 .formButton:hover {
   background-color: #ddd;
+}
+
+.selectFile {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #eee;
+  border-radius: 10px;
 }
