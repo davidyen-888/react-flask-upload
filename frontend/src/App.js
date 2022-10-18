@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./App.css";
 
 function App() {
   const [fileURL, setfileURL] = useState("");
@@ -26,50 +27,21 @@ function App() {
 
   return (
     <>
-      <style>
-        {`
-      .container {
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 20px;
-      }
-      .form {
-        padding: 15px;
-        border: 1px solid #eee;
-        border-radius: 5px;
-      }
-      .form__input {
-        padding: 10px;
-        border-radius: 5px;
-        margin-bottom: 10px;
-      }
-      .form__button {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #eee;
-        border-radius: 5px;
-        background-color: #eee;
-        cursor: pointer;
-      }
-      .form__button:hover {
-        background-color: #ddd;
-      }
-    `}
-      </style>
       <div className="container">
+        <h3>
+          This is a simple file upload app, upload your files and you can see
+          the saved files in the backend/app/Downloads folder
+        </h3>
         <form className="form" onSubmit={handleUploadFile}>
           <input
-            className="form__input"
+            className="formInput"
             type="file"
             multiple
             ref={(ref) => {
               uploadInput = ref;
             }}
           />
-          <button className="form__button" type="submit">
+          <button className="formButton" type="submit">
             Upload
           </button>
         </form>
