@@ -21,3 +21,7 @@ This is a simple example of how to upload files by using React and Flask.
 1. Select a file from your computer
 2. Click the upload button
 3. The file will be uploaded and saved in the local directory `backend/app/Downloads`
+
+## Video Demo
+
+[![Video Demo](https://img.youtube.com/vi/wneLIODAYDc/0.jpg)](https://www.youtube.com/watch?v=wneLIODAYDc)
