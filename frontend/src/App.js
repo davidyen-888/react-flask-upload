@@ -3,9 +3,9 @@ import React, { useState } from "react";
 function App() {
   const [fileURL, setfileURL] = useState("");
 
-  let uploadInput = null;
+  let uploadInput = React.createRef();
 
-  const handleUploadMultipleFiles = (ev) => {
+  const handleUploadFile = (ev) => {
     ev.preventDefault();
 
     const data = new FormData();
@@ -14,14 +14,13 @@ function App() {
       fetch("http://localhost:5000/upload", {
         method: "POST",
         body: data,
-        // eslint-disable-next-line no-loop-func
       }).then((response) => {
         response.json().then((body) => {
           console.log(body);
           setfileURL(`http://localhost:5000/${body.filename}`);
-          alert(`File ${uploadInput.files[i].name} uploaded successfully. `);
         });
       });
+      alert(`File ${uploadInput.files[i].name} uploaded successfully. `);
     }
   };
 
@@ -61,7 +60,7 @@ function App() {
     `}
       </style>
       <div className="container">
-        <form className="form" onSubmit={handleUploadMultipleFiles}>
+        <form className="form" onSubmit={handleUploadFile}>
           <input
             className="form__input"
             type="file"

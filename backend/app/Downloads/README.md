@@ -2,4 +2,4 @@
 
 ## Scenario
 
-    When you upload a file, it will be stored in this folder. All the uploaded files will have a uploaded- prefix in the file name.
+When you upload a file, it will be stored in this folder.

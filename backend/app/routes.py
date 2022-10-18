@@ -1,3 +1,4 @@
+from fileinput import filename
 from app import app
 import os
 from flask import Flask, jsonify, request
@@ -17,8 +18,7 @@ def allowedFile(filename):
 def fileUpload():
     file = request.files.getlist('file')
     for f in file:
-        if f and allowedFile(f.filename):
-            filename = secure_filename(f.filename)
-            destination = UPLOAD_FOLDER + 'uploaded-' + filename
-            f.save(destination)
-        return jsonify({'message': 'File(s) successfully uploaded'})
+        filename = secure_filename(f.filename)
+        if allowedFile(filename):
+            f.save(os.path.join(UPLOAD_FOLDER, filename))
+    return jsonify({'message': 'File uploaded successfully'})
