@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
+import Spinner from "./components/Spinner";
 
 function App() {
   const [, setfileURL] = useState("");
   const [selectedFile, setselectedFile] = useState(null);
+  const [isUploading, setisUploading] = useState(false);
+  const [isFileUploaded, setisFileUploaded] = useState(false);
 
   let uploadInput = React.createRef();
 
@@ -31,6 +34,10 @@ function App() {
         response.json().then((body) => {
           console.log(body);
           setfileURL(`http://localhost:5000/${body.filename}`);
+          if (response.status === 200) {
+            setisFileUploaded(true);
+            setisUploading(false);
+          }
         });
       });
     }
@@ -61,10 +68,21 @@ function App() {
                 return <div key={index}>{item.name}</div>;
               })}
           </div>
-          <button className="formButton" type="submit">
+          <button
+            className="formButton"
+            type="submit"
+            onClick={() => setisUploading(true)}
+          >
             Upload
           </button>
         </form>
+        {isUploading && <Spinner />}
+        {/* Show the success message after the file is uploaded */}
+        {isFileUploaded && (
+          <div className="success">
+            <h3>File(s) uploaded successfully!</h3>
+          </div>
+        )}
       </div>
     </>
   );
