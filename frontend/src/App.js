@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [fileURL, setfileURL] = useState("");
+  const [, setfileURL] = useState("");
   const [selectedFile, setselectedFile] = useState(null);
 
   let uploadInput = React.createRef();
 
+  // Track selected file before the upload
   const handleSelectFile = (e) => {
     const data = [];
     for (let i = 0; i < e.target.files.length; i++) {
@@ -15,10 +16,12 @@ function App() {
     setselectedFile(data);
   };
 
+  // Upload file to server
   const handleUploadFile = (ev) => {
     ev.preventDefault();
 
     const data = new FormData();
+    // Append the file to the request body
     for (let i = 0; i < uploadInput.files.length; i++) {
       data.append("file", uploadInput.files[i], uploadInput.files[i].name);
       fetch("http://localhost:5000/upload", {
@@ -30,7 +33,6 @@ function App() {
           setfileURL(`http://localhost:5000/${body.filename}`);
         });
       });
-      alert(`File ${uploadInput.files[i].name} uploaded successfully. `);
     }
   };
 
