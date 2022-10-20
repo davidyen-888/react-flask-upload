@@ -5,7 +5,8 @@ from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.abspath(os.path.dirname(__file__)) + '/Downloads/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif',
-                          'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv', 'zip', 'rar', 'mp4'])
+                          'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'csv', 'zip', 'rar', 'mp4',
+                          'mp3', 'wav', 'avi', 'mkv', 'flv', 'mov', 'wmv'])
 
 
 def allowedFile(filename):

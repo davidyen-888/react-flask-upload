@@ -24,4 +24,4 @@ This is a simple example of how to upload files by using React and Flask.
 
 ## Video Demo
 
-[![Video Demo](https://img.youtube.com/vi/wneLIODAYDc/0.jpg)](https://www.youtube.com/watch?v=wneLIODAYDc)
+[![Video Demo](https://img.youtube.com/vi/NrGPauj4WgA/0.jpg)](https://www.youtube.com/watch?v=NrGPauj4WgA)
