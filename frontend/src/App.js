@@ -36,9 +36,9 @@ function App() {
           console.log(body);
           setfileURL(`http://localhost:5000/${body.filename}`);
           if (response.status === 200) {
-            setisFileUploaded(true);
-            setisUploading(false);
-            setuploadedFile(selectedFile);
+            setisFileUploaded(true); // flag to show the uploaded file
+            setisUploading(false); // flag to show the spinner
+            setuploadedFile(selectedFile); // set the uploaded file to show the name
           }
         });
       });
@@ -53,6 +53,7 @@ function App() {
           This is a simple file upload app, upload your files and you can see
           the saved files in the backend/app/Downloads folder
         </h3>
+        {/* Upload file form */}
         <form className="form" onSubmit={handleUploadFile}>
           <input
             className="formInput"
@@ -79,7 +80,7 @@ function App() {
           </button>
         </form>
         {isUploading && <Spinner />}
-        {/* Show the success message after the file is uploaded */}
+        {/* Show the success message and file names after upload */}
         {isFileUploaded && (
           <div>
             <h3 className="success">File(s) uploaded successfully!</h3>

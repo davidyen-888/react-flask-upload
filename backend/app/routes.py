@@ -1,7 +1,6 @@
-from fileinput import filename
 from app import app
 import os
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = os.path.abspath(os.path.dirname(__file__)) + '/Downloads/'
