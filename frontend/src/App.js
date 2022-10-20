@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Spinner from "./components/Spinner";
 
 function App() {
   const [, setfileURL] = useState("");
   const [selectedFile, setselectedFile] = useState(null);
+  const [uploadedFile, setuploadedFile] = useState({});
   const [isUploading, setisUploading] = useState(false);
   const [isFileUploaded, setisFileUploaded] = useState(false);
 
@@ -12,11 +13,11 @@ function App() {
 
   // Track selected file before the upload
   const handleSelectFile = (e) => {
-    const data = [];
+    const selectedFileList = [];
     for (let i = 0; i < e.target.files.length; i++) {
-      data.push(e.target.files.item(i));
+      selectedFileList.push(e.target.files.item(i));
     }
-    setselectedFile(data);
+    setselectedFile(selectedFileList);
   };
 
   // Upload file to server
@@ -37,6 +38,7 @@ function App() {
           if (response.status === 200) {
             setisFileUploaded(true);
             setisUploading(false);
+            setuploadedFile(selectedFile);
           }
         });
       });
@@ -79,8 +81,15 @@ function App() {
         {isUploading && <Spinner />}
         {/* Show the success message after the file is uploaded */}
         {isFileUploaded && (
-          <div className="success">
-            <h3>File(s) uploaded successfully!</h3>
+          <div>
+            <h3 className="success">File(s) uploaded successfully!</h3>
+            <div className="uploadedFile">
+              <h3>Uploaded file(s): </h3>
+              {uploadedFile &&
+                uploadedFile.map((item, index) => {
+                  return <div key={index}>{item.name}</div>;
+                })}
+            </div>
           </div>
         )}
       </div>

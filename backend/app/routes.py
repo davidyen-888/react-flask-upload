@@ -13,10 +13,9 @@ def allowedFile(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-# API to upload file
-
 
 @app.route('/upload', methods=['POST', 'GET'])
+# API to upload file
 def fileUpload():
     if request.method == 'POST':
         file = request.files.getlist('file')
@@ -24,6 +23,8 @@ def fileUpload():
             filename = secure_filename(f.filename)
             if allowedFile(filename):
                 f.save(os.path.join(UPLOAD_FOLDER, filename))
+            else:
+                return jsonify({'message': 'File type not allowed'}), 400
         return jsonify({"name": filename, "status": "success"})
     else:
         return jsonify({"status": "failed"})

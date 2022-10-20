@@ -1,4 +1,3 @@
-/* all bg */
 body {
   background-color: #fcf5d287;
 }
@@ -35,4 +34,19 @@ body {
   text-align: center;
   border: 1px solid #eee;
   border-radius: 10px;
+}
+
+.success {
+  color: green;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.uploadedFile {
+  padding-bottom: 20px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  text-align: center; 
 }
