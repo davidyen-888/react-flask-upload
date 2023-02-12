@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import "./App.css";
 import Spinner from "./components/Spinner";
 
@@ -21,27 +22,29 @@ function App() {
   };
 
   // Upload file to server
-  const handleUploadFile = (ev) => {
+  const handleUploadFile = async (ev) => {
     ev.preventDefault();
 
+    setisUploading(true);
     const data = new FormData();
     // Append the file to the request body
     for (let i = 0; i < uploadInput.files.length; i++) {
       data.append("file", uploadInput.files[i], uploadInput.files[i].name);
-      fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: data,
-      }).then((response) => {
-        response.json().then((body) => {
-          console.log(body);
-          setfileURL(`http://localhost:5000/${body.filename}`);
-          if (response.status === 200) {
-            setisFileUploaded(true); // flag to show the uploaded file
-            setisUploading(false); // flag to show the spinner
-            setuploadedFile(selectedFile); // set the uploaded file to show the name
-          }
-        });
-      });
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/upload", data);
+      const body = response.data;
+      console.log(body);
+      setfileURL(`http://localhost:5000/${body.filename}`);
+      if (response.status === 200) {
+        setisFileUploaded(true); // flag to show the uploaded file
+        setisUploading(false); // flag to show the spinner
+        setuploadedFile(selectedFile); // set the uploaded file to show the name
+      }
+    } catch (error) {
+      console.error(error);
+      setisUploading(false);
     }
   };
 
@@ -71,11 +74,7 @@ function App() {
                 return <div key={index}>{item.name}</div>;
               })}
           </div>
-          <button
-            className="formButton"
-            type="submit"
-            onClick={() => setisUploading(true)}
-          >
+          <button className="formButton" type="submit">
             Upload
           </button>
         </form>
