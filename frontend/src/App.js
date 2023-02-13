@@ -9,6 +9,7 @@ function App() {
   const [uploadedFile, setuploadedFile] = useState({});
   const [isUploading, setisUploading] = useState(false);
   const [isFileUploaded, setisFileUploaded] = useState(false);
+  const [uploadProgress, setuploadProgress] = useState(0);
 
   let uploadInput = React.createRef();
 
@@ -33,13 +34,23 @@ function App() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/upload", data);
+      const config = {
+        onUploadProgress: (progressEvent) => {
+          const { loaded, total } = progressEvent;
+          setuploadProgress(Math.round((loaded / total) * 100));
+        },
+      };
+      const response = await axios.post(
+        "http://localhost:5000/upload",
+        data,
+        config
+      );
       const body = response.data;
       console.log(body);
       setfileURL(`http://localhost:5000/${body.filename}`);
       if (response.status === 200) {
         setisFileUploaded(true); // flag to show the uploaded file
-        setisUploading(false); // flag to show the spinner
+        setisUploading(false);
         setuploadedFile(selectedFile); // set the uploaded file to show the name
       }
     } catch (error) {
@@ -78,7 +89,21 @@ function App() {
             Upload
           </button>
         </form>
-        {isUploading && <Spinner />}
+        {/* Show the upload progress */}
+        {isUploading && (
+          <>
+            <Spinner />
+            <div
+              className="progress-bar"
+              role="progressbar"
+              aria-valuenow={uploadProgress}
+              aria-valuemin="0"
+              aria-valuemax="100"
+            >
+              {uploadProgress}%
+            </div>
+          </>
+        )}
         {/* Show the success message and file names after upload */}
         {isFileUploaded && (
           <div>
