@@ -1,7 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./App.css";
-import Spinner from "./components/Spinner";
+import {
+  Box,
+  CircularProgress,
+  CircularProgressLabel,
+  Flex,
+  Input,
+  VStack,
+  Text,
+  Code,
+  Stack,
+} from "@chakra-ui/react";
 
 function App() {
   const [, setfileURL] = useState("");
@@ -60,65 +69,121 @@ function App() {
   };
 
   return (
-    <>
-      <div className="container">
-        <h1>React-Flask File Upload</h1>
-        <h3>
-          This is a simple file upload app, upload your files and you can see
-          the saved files in the backend/app/Downloads folder
-        </h3>
+    <Flex
+      align="center"
+      direction="column"
+      px={20}
+      bg={"#9DD2F2"}
+      minH={"100vh"}
+    >
+      <Stack
+        spacing={4}
+        align="center"
+        bg={"#F2F2F2"}
+        p={20}
+        my={20}
+        borderRadius={20}
+        minH={"90vh"}
+      >
+        <Box w={500} textAlign="center" px={10}>
+          <h1>React-Flask File Upload</h1>
+          <Text fontWeight="bold" color="gray.700">
+            This is a simple file upload app, upload your files and you can see
+            the saved files in the <Code>backend/app/Downloads</Code> folder.
+          </Text>
+        </Box>
         {/* Upload file form */}
-        <form className="form" onSubmit={handleUploadFile}>
-          <input
-            className="formInput"
-            type="file"
-            multiple
-            ref={(ref) => {
-              uploadInput = ref;
-            }}
-            onChange={handleSelectFile}
-          />
-          <div className="selectFile">
-            <h3>Selected file(s): </h3>
-            {selectedFile &&
-              selectedFile.map((item, index) => {
-                return <div key={index}>{item.name}</div>;
-              })}
-          </div>
-          <button className="formButton" type="submit">
-            Upload
-          </button>
+        <form onSubmit={handleUploadFile}>
+          <Flex justify="center" align="center" direction="column">
+            <label
+              htmlFor="file"
+              style={{
+                cursor: "pointer",
+                padding: 10,
+                marginBottom: 20,
+                border: "1px solid #000",
+                borderRadius: 10,
+                background: "#698DAF",
+                color: "white",
+              }}
+            >
+              Select file(s) to upload
+              <Input
+                id="file"
+                type="file"
+                multiple
+                ref={(ref) => {
+                  uploadInput = ref;
+                }}
+                onChange={handleSelectFile}
+                style={{ display: "none" }}
+              />
+            </label>
+            <VStack bg="azure" p={30} borderRadius={20}>
+              <Text fontWeight="bold">Selected file(s)</Text>
+              <Flex pb={20} direction="column">
+                {selectedFile &&
+                  selectedFile.map((item, index) => {
+                    return (
+                      <Text key={index}>
+                        <b>{index + 1}. </b>
+                        {item.name}
+                      </Text>
+                    );
+                  })}
+              </Flex>
+              <Box
+                as="button"
+                type="submit"
+                disabled={selectedFile ? false : true}
+                p={15}
+                textAlign="center"
+                fontWeight={600}
+                border="1px solid #000"
+                borderRadius={10}
+                bg={"#698DAF"}
+                color={"white"}
+                cursor="pointer"
+              >
+                Upload
+              </Box>
+            </VStack>
+          </Flex>
         </form>
         {/* Show the upload progress */}
         {isUploading && (
           <>
-            <Spinner />
-            <div
-              className="progress-bar"
-              role="progressbar"
-              aria-valuenow={uploadProgress}
-              aria-valuemin="0"
-              aria-valuemax="100"
-            >
-              {uploadProgress}%
-            </div>
+            <CircularProgress value={uploadProgress} thickness="12px">
+              <CircularProgressLabel>{uploadProgress}%</CircularProgressLabel>
+            </CircularProgress>
           </>
         )}
         {/* Show the success message and file names after upload */}
         {isFileUploaded && (
-          <div>
-            <h3 className="success">File(s) uploaded successfully!</h3>
-            <div className="uploadedFile">
-              <h3>Uploaded file(s): </h3>
-              {uploadedFile &&
-                uploadedFile.map((item, index) => {
-                  return <div key={index}>{item.name}</div>;
-                })}
-            </div>
-          </div>
+          <>
+            <Flex justify="center" align="center" direction="column">
+              <Box p={10} textAlign="center" color={"green"}>
+                <h3>File(s) uploaded successfully</h3>
+              </Box>
+            </Flex>
+            <VStack bg="azure" p={30} borderRadius={20}>
+              <Text fontWeight="bold">Uploaded file(s)</Text>
+              <Flex pb={20} direction="column">
+                {uploadedFile &&
+                  uploadedFile.map((item, index) => {
+                    return (
+                      <Text key={index}>
+                        <b>{index + 1}. </b>
+                        {item.name}
+                      </Text>
+                    );
+                  })}
+              </Flex>
+            </VStack>
+          </>
         )}
-      </div>
-    </>
+      </Stack>
+    </Flex>
   );
 }
 

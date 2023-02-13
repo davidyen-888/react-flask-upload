@@ -2,7 +2,6 @@
 
 # dependencies
 /frontend/node_modules
-/backend/app
 /.pnp
 .pnp.js
 
@@ -24,3 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 .gitignore
+
+/backend/app
